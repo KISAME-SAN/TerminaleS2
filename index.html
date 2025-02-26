@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte à rebours BAC 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e5799, #207cca);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1.5s;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 2s;
+        }
+
+        .countdown-box {
+            width: 140px;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .countdown-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .objectives {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .objective {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 1s;
+            animation-fill-mode: both;
+        }
+
+        .objective:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .objective:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .objective h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 70%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            border-radius: 10px;
+            position: relative;
+            transition: width 2s ease-in-out;
+        }
+
+        .objective::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            top: 0;
+            left: -100%;
+            animation: shine 3s infinite linear;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Animation pour les textes des objectifs */
+        .class-objective h3 {
+            animation: pulse 2s infinite;
+            font-size: 2rem;
+            color: #ffeb3b;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+        }
+        
+        .animated-text {
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #2196f3, #00c853);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-box {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compte à Rebours jusqu'au BAC 2025</h1>
+        
+        <div class="countdown">
+            <div class="countdown-box">
+                <div class="number" id="days">--</div>
+                <div class="label">Jours</div>
+            </div>
+            <div class="countdown-box">
+                <div class="number" id="hours">--</div>
+                <div class="label">Heures</div>
+            </div>
+            <div class="countdown-box">
+                <div class="number" id="minutes">--</div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="countdown-box">
+                <div class="number" id="seconds">--</div>
+                <div class="label">Secondes</div>
+            </div>
+        </div>
+        
+        <div class="objectives">
+            <div class="objective class-objective">
+                <h3>OBJECTIF DE LA CLASSE TS2 70%</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 70%;">
+                        <div class="progress-text">70%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="objective">
+                <h3 class="animated-text">OBJECTIF MENTION TRÈS BIEN POUR NIANG</h3>
+            </div>
+            
+            <div class="objective">
+                <h3 class="animated-text">OBJECTIF MENTION ASSEZ BIEN POUR MOISE</h3>
+            </div>
+            
+            <div class="objective">
+                <h3 class="animated-text">OBJECTIF BAC 2026 POUR SANE</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Date cible: 1er juillet 2025 à 8h00
+        const targetDate = new Date('July 1, 2025 08:00:00').getTime();
+        
+        // Mise à jour du compte à rebours toutes les secondes
+        const countdown = setInterval(() => {
+            // Date actuelle
+            const now = new Date().getTime();
+            
+            // Différence entre la date cible et maintenant
+            const distance = targetDate - now;
+            
+            // Calculs pour jours, heures, minutes et secondes
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Affichage du compte à rebours
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('seconds').innerHTML = seconds;
+            
+            // Si le compte à rebours est terminé
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('days').innerHTML = '0';
+                document.getElementById('hours').innerHTML = '0';
+                document.getElementById('minutes').innerHTML = '0';
+                document.getElementById('seconds').innerHTML = '0';
+                
+                // Message lorsque le bac a commencé
+                document.querySelector('h1').innerHTML = 'Les épreuves du BAC ont commencé!';
+            }
+        }, 1000);
+        
+        // Animation pour la barre de progression de l'objectif de classe
+        const progressBar = document.querySelector('.progress-bar');
+        let width = 0;
+        const targetWidth = 70;
+        const interval = setInterval(() => {
+            if (width >= targetWidth) {
+                clearInterval(interval);
+            } else {
+                width++;
+                progressBar.style.width = width + '%';
+                progressBar.querySelector('.progress-text').textContent = width + '%';
+            }
+        }, 20);
+        
+        // Animation pour les textes des objectifs individuels
+        const animatedTexts = document.querySelectorAll('.animated-text');
+        animatedTexts.forEach(text => {
+            text.style.opacity = 0;
+            setTimeout(() => {
+                text.style.opacity = 1;
+                text.style.transition = "opacity 1s ease-in-out";
+            }, 500 + Math.random() * 1000);
+        });
+    </script>
+</body>
+</html>
